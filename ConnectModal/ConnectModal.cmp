@@ -1,0 +1,58 @@
+<aura:component controller="AuraConnectController" implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="isOpen" type="Boolean" default="true"/>
+    <aura:attribute name="contacts" type="List"/>
+    <aura:attribute name="contactMap" type="Map"/>
+    <aura:attribute name="accounts" type="List"/>
+    <aura:attribute name="opportunities" type="List"/>
+
+    <aura:attribute name="selectedContactId" type="Id"/>
+    <aura:attribute name="selectedAccountId" type="Id"/>
+    <aura:attribute name="selectedOpportunityId" type="Id"/>
+    <aura:attribute name="selectedAccountName" type="String"/>
+    <aura:attribute name="hasAccount" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initData}"/>
+
+    <aura:if isTrue="{!v.isOpen}">
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeModal}" class="slds-modal__close"/>
+                    <h2 class="slds-text-heading_medium">Connect Contact</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <lightning:combobox
+                        label="Select Contact"
+                        value="{!v.selectedContactId}"
+                        options="{!v.contacts}"
+                        onchange="{!c.handleContactChange}"/>
+
+                    <aura:if isTrue="{!v.hasAccount}">
+                        <lightning:input label="Account" value="{!v.selectedAccountName}" disabled="true"/>
+                    <aura:set attribute="else">
+                        <lightning:combobox
+                            label="Select Account"
+                            value="{!v.selectedAccountId}"
+                            options="{!v.accounts}"
+                            onchange="{!c.handleAccountChange}"/>
+                    </aura:set>
+                    </aura:if>
+
+                    <lightning:combobox
+                        label="Select Opportunity"
+                        value="{!v.selectedOpportunityId}"
+                        options="{!v.opportunities}"
+                        onchange="{!c.handleOpportunityChange}"/>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{! c.closeModal }"/>
+                    <lightning:button variant="brand" label="Save"
+                        onclick="{! c.saveConnection }"
+                        disabled="{! empty(v.selectedOpportunityId) }"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
