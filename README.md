@@ -20,7 +20,6 @@ Create an aura app where there will be 4 aura component showing table on each co
 * **Component 3**: Opportunity (Show 3 column - Opportunity Account, Opportunity Name, Opportunity Stage)
 * **Component 4**: Connected Data (show 3 column - Account, Opportunity and Contact)
 
----
 
 ## 🔗 "Connect" Functionality
 
